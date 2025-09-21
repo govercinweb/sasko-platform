@@ -1,0 +1,40 @@
+# Sasko.io Backend Requirements
+# AI-Powered iGaming SaaS Platform
+
+# Core Django
+django==5.2.6
+djangorestframework==3.16.1
+django-cors-headers==4.9.0
+
+# Database
+psycopg2-binary==2.9.10
+django-redis==5.4.0
+
+# Async Tasks
+celery==5.5.3
+redis==6.4.0
+
+# Additional packages for full functionality
+python-decouple==3.8
+django-filter==24.3
+django-extensions==3.2.3
+Pillow==10.4.0
+requests==2.32.3
+
+# AI/ML packages
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.5.2
+tensorflow==2.18.0
+
+# Development
+django-debug-toolbar==4.4.6
+pytest==8.3.3
+pytest-django==4.9.0
+black==24.10.0
+flake8==7.1.1
+
+# Production
+gunicorn==23.0.0
+whitenoise==6.8.2
+sentry-sdk==2.18.0

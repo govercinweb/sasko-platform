@@ -1,0 +1,147 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Ana Veritabanı
+  postgres:
+    image: postgres:15-alpine
+    container_name: sasko-postgres-prod
+    environment:
+      POSTGRES_DB: ${DB_NAME:-sasko_db}
+      POSTGRES_USER: ${DB_USER:-sasko_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sasko-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-sasko_user}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: sasko-redis-prod
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - sasko-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sasko-backend-prod
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://${DB_USER:-sasko_user}:${DB_PASSWORD}@postgres:5432/${DB_NAME:-sasko_db}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-sasko.io,api.sasko.io}
+    volumes:
+      - static_files:/app/staticfiles
+      - media_files:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sasko-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend/sasko-frontend
+      dockerfile: Dockerfile
+    container_name: sasko-frontend-prod
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.sasko.io}
+    depends_on:
+      - backend
+    networks:
+      - sasko-network
+    restart: unless-stopped
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sasko-celery-worker-prod
+    command: celery -A sasko_core worker -l info --concurrency=4
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://${DB_USER:-sasko_user}:${DB_PASSWORD}@postgres:5432/${DB_NAME:-sasko_db}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sasko-network
+    restart: unless-stopped
+
+  # Celery Beat
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sasko-celery-beat-prod
+    command: celery -A sasko_core beat -l info
+    environment:
+      - DEBUG=False
+      - DATABASE_URL=postgresql://${DB_USER:-sasko_user}:${DB_PASSWORD}@postgres:5432/${DB_NAME:-sasko_db}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - sasko-network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: sasko-nginx-prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.prod.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - static_files:/var/www/static
+      - media_files:/var/www/media
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - sasko-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_files:
+  media_files:
+
+networks:
+  sasko-network:
+    driver: bridge
