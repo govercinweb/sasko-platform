@@ -24,4 +24,5 @@ auditlog.register(
     User,
     m2m_fields=['groups', 'user_permissions'],
     mask_fields=['password'],
+    exclude_fields=['last_login'],
 )

@@ -131,9 +131,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUDITLOG_INCLUDE_ALL_MODELS = True
-AUDITLOG_EXCLUDE_TRACKING_FIELDS = [
-    'created_at',
-    'updated_at',
-    'last_login',
-]
+# AUDITLOG_INCLUDE_ALL_MODELS = True
+# AUDITLOG_EXCLUDE_TRACKING_FIELDS = [
+#     'created_at',
+#     'updated_at',
+#     'last_login',
+# ]
+
+
