@@ -1,6 +1,8 @@
-from django.urls import path
-from rest_framework.authtoken import views
+from django.urls import path, include
+
+from api.views import obtain_expiring_auth_token
 
 urlpatterns = [
-    path('auth/login/', views.obtain_auth_token),
+    path('auth/login/', obtain_expiring_auth_token),
+    path('accounts/', include('accounts.urls')),
 ]

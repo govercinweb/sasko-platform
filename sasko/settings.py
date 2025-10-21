@@ -138,4 +138,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     'last_login',
 # ]
 
+DRF_AUTH_TOKEN_LIFE_IN_HOURS = 24
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'api.authentication.ExpiringTokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+
+}
