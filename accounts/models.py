@@ -20,4 +20,8 @@ class User(AbstractUser):
         return self.email
 
 
-auditlog.register(User, m2m_fields=['groups', 'user_permissions'])
+auditlog.register(
+    User,
+    m2m_fields=['groups', 'user_permissions'],
+    mask_fields=['password'],
+)
