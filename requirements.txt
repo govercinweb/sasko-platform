@@ -1,2 +1,4 @@
 Django==5.2.7
 djangorestframework==3.16.1
+django-auditlog==3.3.0
+ipython==9.6.0
