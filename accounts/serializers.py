@@ -21,4 +21,13 @@ class ProfileMeSerializer(serializers.ModelSerializer):
         ]
 
     def get_permissions(self, obj):
-        return sorted(list(obj.get_user_permissions() | obj.get_group_permissions()))
+
+        def sort_key(perm_txt):
+            app, perm = perm_txt.split('.')
+            action, mdl = perm.split('_')
+            return app, mdl, action
+
+        return sorted(
+            list(obj.get_user_permissions() | obj.get_group_permissions() | obj.get_role_permissions()),
+            key=sort_key,
+        )

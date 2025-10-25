@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Permission
 from django.utils.translation import gettext as _
 
 from auditlog.registry import auditlog
@@ -21,10 +21,15 @@ class User(AbstractUser):
         on_delete=models.CASCADE,
     )
 
+    roles = models.ManyToManyField('accounts.Role', blank=True)
+
     objects = UserManager()
 
     def __str__(self):
         return self.email
+
+    def get_role_permissions(self):
+        return set(['{1}.{0}'.format(*p.natural_key()) for p in Permission.objects.filter(role__in=self.roles.all())])
 
 
 auditlog.register(
@@ -93,3 +98,16 @@ auditlog.register(
     mask_fields=['password', 'otp_secret'],
     exclude_fields=['created_at', 'updated_at'],
 )
+
+
+class Role(models.Model):
+    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    permissions = models.ManyToManyField('auth.Permission')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
