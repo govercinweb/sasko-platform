@@ -11,4 +11,6 @@
 5. ticket sistemi
 6. app ici bildirimli mesajlasma
 7. CF uzerinden API ile domain baglama.
-8. ...
+8. Multi-admin onay hiyerarsisi
+9. Dogum gunu bonusu ve konfetili popup
+10. ...
