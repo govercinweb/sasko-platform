@@ -159,3 +159,7 @@ REST_FRAMEWORK = {
     ],
 
 }
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
