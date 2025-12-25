@@ -111,3 +111,10 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name
+
+
+auditlog.register(
+    Role,
+    m2m_fields=['permissions'],
+    exclude_fields=['created_at', 'updated_at'],
+)
