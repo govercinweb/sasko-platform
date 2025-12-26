@@ -72,6 +72,7 @@ class InSiteNotificationUserInteractionSerializer(serializers.ModelSerializer):
 
 class InSiteNotificationSerializer(serializers.ModelSerializer):
     interactions = InSiteNotificationUserInteractionSerializer(many=True)
+    delivered_at = serializers.SerializerMethodField()
 
     class Meta:
         model = InSiteNotification
@@ -82,6 +83,7 @@ class InSiteNotificationSerializer(serializers.ModelSerializer):
             'type',
             'user',
             'interactions',
+            'delivered_at',
         ]
         extra_kwargs = {
             'subject': {'read_only': True},
@@ -90,3 +92,9 @@ class InSiteNotificationSerializer(serializers.ModelSerializer):
             'user': {'read_only': True},
             'interactions': {'read_only': True},
         }
+
+    @staticmethod
+    def get_delivered_at(obj):
+        if obj.start_showing_at:
+            return obj.start_showing_at
+        return obj.created_at

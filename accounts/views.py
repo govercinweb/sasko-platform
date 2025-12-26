@@ -56,15 +56,18 @@ class InSiteNotificationViewSet(viewsets.ReadOnlyModelViewSet):
             Q(user=self.request.user) | Q(type=InSiteNotification.TYPE_GENERAL),
             Q(start_showing_at__lte=now) | Q(start_showing_at__isnull=True),
             Q(end_showing_at__gte=now) | Q(end_showing_at__isnull=True),
-        ).order_by(
-            '-created_at',
         ).distinct()
 
-        filtered_notifications = filter(
+        _notifications = filter(
             lambda n: not n.interactions or not n.interactions[0].is_deleted,
             notifications
         )
-        return filtered_notifications
+        _notifications = sorted(
+            _notifications,
+            key=lambda n: n.start_showing_at or n.created_at,
+            reverse=True,
+        )
+        return _notifications
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
