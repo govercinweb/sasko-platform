@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 15:37+0300\n"
+"POT-Creation-Date: 2025-12-26 05:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,6 +45,14 @@ msgstr "Superuser is_superuser=True olmalı."
 #: accounts/models.py:12
 msgid "email address"
 msgstr "E-posta Adresi"
+
+#: accounts/models.py:135
+msgid "General"
+msgstr "Genel"
+
+#: accounts/models.py:136
+msgid "User Specific"
+msgstr "Kullanıcıya Özel"
 
 #: accounts/serializers.py:45
 msgid "Existing password is incorrect."

@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from accounts.models import User, Merchant, InfrastructureCredential, Role
+from accounts.models import User, Merchant, InfrastructureCredential, Role, InSiteNotification, \
+    InSiteNotificationUserInteraction
 
 
 @admin.register(User)
@@ -65,3 +66,13 @@ class RoleAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('merchant').all()
+
+
+@admin.register(InSiteNotification)
+class InSiteNotificationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(InSiteNotificationUserInteraction)
+class InSiteNotificationUserInteractionAdmin(admin.ModelAdmin):
+    pass

@@ -118,3 +118,75 @@ auditlog.register(
     m2m_fields=['permissions'],
     exclude_fields=['created_at', 'updated_at'],
 )
+
+
+class InSiteNotification(models.Model):
+    TYPE_GENERAL = 'general'
+    TYPE_USER_SPECIFIC = 'user_specific'
+
+    start_showing_at = models.DateTimeField(null=True, blank=True)
+    end_showing_at = models.DateTimeField(null=True, blank=True)
+
+    subject = models.CharField(max_length=200)
+    body = models.TextField()
+
+    is_active = models.BooleanField(default=True)
+
+    type = models.CharField(
+        max_length=40,
+        choices=[
+            (TYPE_GENERAL, _('General')),
+            (TYPE_USER_SPECIFIC, _('User Specific'))
+        ],
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject
+
+
+auditlog.register(
+    InSiteNotification,
+    exclude_fields=['created_at', 'updated_at'],
+)
+
+
+class InSiteNotificationUserInteraction(models.Model):
+    notification = models.ForeignKey(
+        InSiteNotification,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    # start_showing_at = models.DateTimeField(null=True, blank=True)
+    # end_showing_at = models.DateTimeField(null=True, blank=True)
+    #
+    # subject = models.CharField(max_length=200, null=True, blank=True)
+    # body = models.TextField(null=True, blank=True)
+
+    is_deleted = models.BooleanField(default=False)
+
+    is_read = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+auditlog.register(
+    InSiteNotificationUserInteraction,
+    exclude_fields=['created_at', 'updated_at']
+)
+

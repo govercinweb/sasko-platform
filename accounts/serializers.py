@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from accounts.models import User
+from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification
 
 
 class ProfileDetailUpdateSerializer(serializers.ModelSerializer):
@@ -54,3 +54,39 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.password = make_password(validated_data['new_password'])
         instance.save()
         return instance
+
+
+class InSiteNotificationUserInteractionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InSiteNotificationUserInteraction
+        fields = [
+            'id',
+            'is_deleted',
+            'is_read',
+            'user',
+        ]
+        extra_kwargs = {
+            'user': {'read_only': True},
+        }
+
+
+class InSiteNotificationSerializer(serializers.ModelSerializer):
+    interactions = InSiteNotificationUserInteractionSerializer(many=True)
+
+    class Meta:
+        model = InSiteNotification
+        fields = [
+            'id',
+            'subject',
+            'body',
+            'type',
+            'user',
+            'interactions',
+        ]
+        extra_kwargs = {
+            'subject': {'read_only': True},
+            'body': {'read_only': True},
+            'type': {'read_only': True},
+            'user': {'read_only': True},
+            'interactions': {'read_only': True},
+        }
