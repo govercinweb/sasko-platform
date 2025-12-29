@@ -2,13 +2,14 @@ import datetime
 
 from django.utils import timezone
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from django.db.models import Q, Prefetch, OuterRef
 
 from accounts.models import InSiteNotification, InSiteNotificationUserInteraction
 from accounts.serializers import ProfileDetailUpdateSerializer, ChangePasswordSerializer, \
-    InSiteNotificationSerializer
+    InSiteNotificationSerializer, InSiteNotificationChangeReadStatusSerializer
 from api.serializers import ProfileMeSerializer
 
 
@@ -69,17 +70,28 @@ class InSiteNotificationViewSet(viewsets.ReadOnlyModelViewSet):
         )
         return _notifications
 
-    def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
+    @staticmethod
+    def format_output(data):
         unread_count = len(
             list(
                 filter(
                     lambda n: not n['interactions'] or not n['interactions'][0]['is_read'],
-                    response.data,
+                    data,
                 )
             )
         )
-        return Response({
+        return {
             'unread_count': unread_count,
-            'results': response.data,
-        })
+            'results': data,
+        }
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        return Response(self.format_output(response.data))
+
+    @action(detail=False, methods=['patch'], serializer_class=InSiteNotificationChangeReadStatusSerializer)
+    def change_read_status(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(self.format_output(InSiteNotificationSerializer(instance=self.get_queryset(), many=True).data))

@@ -70,7 +70,7 @@ class RoleAdmin(admin.ModelAdmin):
 
 @admin.register(InSiteNotification)
 class InSiteNotificationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['subject', 'is_active', 'start_showing_at', 'created_at']
 
 
 @admin.register(InSiteNotificationUserInteraction)

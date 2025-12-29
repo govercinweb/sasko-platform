@@ -98,3 +98,26 @@ class InSiteNotificationSerializer(serializers.ModelSerializer):
         if obj.start_showing_at:
             return obj.start_showing_at
         return obj.created_at
+
+
+class InSiteNotificationChangeReadStatusSerializer(serializers.Serializer):
+    in_site_notifications = serializers.PrimaryKeyRelatedField(queryset=InSiteNotification.objects.all(), many=True)
+    mark_as = serializers.ChoiceField(choices=['read', 'unread', 'deleted'])
+
+    def create(self, validated_data):
+        return self.update(None, validated_data)
+
+    def update(self, instance, validated_data):
+        for notification in validated_data['in_site_notifications']:
+            defaults = {}
+            mark = validated_data['mark_as']
+            if mark in ['read', 'unread']:
+                defaults['is_read'] = mark == 'read'
+            elif mark in ['deleted']:
+                defaults['is_deleted'] = True
+            InSiteNotificationUserInteraction.objects.update_or_create(
+                notification=notification,
+                user=self.context['request'].user,
+                defaults=defaults,
+            )
+        return validated_data
