@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+import dj_database_url
 from environs import env
 
 env.read_env()
@@ -97,14 +98,21 @@ WSGI_APPLICATION = 'sasko.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
+DATABASE_URL = env.str('DATABASE_URL', '')
+
+if not DATABASE_URL:
+    database = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+else:
+    database = dj_database_url.parse(
+        DATABASE_URL
+    )
+
+DATABASES = {
+    'default': database
 }
-
-
 
 
 # Password validation
