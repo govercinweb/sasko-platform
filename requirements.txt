@@ -4,3 +4,5 @@ django-auditlog==3.3.0
 ipython==9.6.0
 django-rosetta==0.10.3
 django-cors-headers==4.9.0
+environs==14.5.0
+gunicorn==23.0.0
