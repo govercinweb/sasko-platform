@@ -110,9 +110,7 @@ else:
         DATABASE_URL
     )
 
-DATABASES = {
-    'default': database
-}
+DATABASES = {'default': database}
 
 
 # Password validation
