@@ -6,7 +6,7 @@
 
 Sasko.io, iGaming operatörlerine AI destekli modüller, çoklu para birimi desteği ve esnek API mimarisi sunan yeni nesil SaaS platformudur.
 
-### 🎯 Temel Özellikler
+### 🎯 Temel Özellikler 
 
 - **🤖 AI-Powered Modüller:** 8 farklı AI destekli modül
 - **💰 Çoklu Para Birimi:** 50+ para birimi desteği
