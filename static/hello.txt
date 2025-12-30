@@ -1,0 +1,100 @@
+1. Why don’t programmers like nature? It has too many bugs.
+2. I told my computer I needed a break—and it froze.
+3. Why do Java developers wear glasses? Because they don’t C#.
+4. I tried to catch fog yesterday. Mist.
+5. Why was the math book sad? Too many problems.
+6. Parallel lines have so much in common. It’s a shame they’ll never meet.
+7. I told my boss I was late because of traffic. He said, “Next time, download an update.”
+8. Why did the scarecrow get promoted? He was outstanding in his field.
+9. My password used to be “incorrect.” So whenever I forgot it, the computer reminded me.
+10. Why don’t skeletons fight each other? They don’t have the guts.
+11. I asked my dog what’s two minus two. He said nothing.
+12. Why did the developer go broke? Because he used up all his cache.
+13. I once tried to be a morning person. Didn’t compile.
+14. Why did the coffee file a police report? It got mugged.
+15. I’m reading a book about anti-gravity. It’s impossible to put down.
+16. Why did the function return early? It had a timeout.
+17. I told my wife she was drawing her eyebrows too high. She looked surprised.
+18. Why don’t scientists trust atoms? Because they make up everything.
+19. My phone battery lasts longer than most New Year’s resolutions.
+20. Why did the keyboard break up with the mouse? It felt clicked.
+21. I used to play piano by ear. Now I use my hands.
+22. Why was the computer cold? It left its Windows open.
+23. I started a diet, but I feel like I’ve lost my balance.
+24. Why did the developer cross the road? To refactor the chicken.
+25. I told a joke about UDP. You might not get it.
+26. Why don’t eggs tell jokes? They’d crack each other up.
+27. I tried to learn recursion. I tried to learn recursion.
+28. Why was the belt arrested? It held up a pair of pants.
+29. I asked my mirror for advice. It reflected on it.
+30. Why did the database admin leave the party early? Too many joins.
+31. I bought shoes from a drug dealer once. I don’t know what he laced them with.
+32. Why do bicycles fall over? They’re two-tired.
+33. I gave up on learning math. It just doesn’t add up.
+34. Why did the computer show up at work late? It had a hard drive.
+35. I tried to be social, but my Wi-Fi had other plans.
+36. Why did the scarecrow win an award again? Still outstanding.
+37. I asked the librarian if the library had books on paranoia. She whispered, “They’re right behind you.”
+38. Why don’t programmers like hiking? Too many paths.
+39. I told my calendar a joke. It laughed at all my dates.
+40. Why did the picture go to jail? It was framed.
+41. I tried to organize a hide-and-seek tournament. Good players were hard to find.
+42. Why did the computer go to therapy? Too many unresolved issues.
+43. I ordered a chicken and an egg online. I’ll let you know.
+44. Why was the stadium so cool? It was filled with fans.
+45. I tried to learn machine learning. Turns out, the machine learned faster than me.
+46. Why don’t oysters donate to charity? Because they’re shellfish.
+47. I told my router a secret. Now the whole network knows.
+48. Why did the developer hate nature documentaries? Too many unexpected crashes.
+49. I started a band called “1023MB.” We haven’t gotten a gig yet.
+50. Why did the tomato blush? It saw the salad dressing.
+51. I asked my shadow for help. It said it was following me.
+52. Why was the JavaScript developer sad? He didn’t know how to ‘null’ his feelings.
+53. I tried to write a joke about time travel. You didn’t like it.
+54. Why do cows wear bells? Because their horns don’t work.
+55. I told my boss I was productive today. I opened 37 tabs.
+56. Why did the developer bring a ladder to work? To reach the next level.
+57. I tried to eat a clock once. It was very time-consuming.
+58. Why did the computer blush? It saw your cookies.
+59. I joined a gym, but the only thing I lifted was my expectations.
+60. Why don’t secrets last in tech teams? Too many leaks.
+61. I asked my phone for directions. It said, “Turn around.”
+62. Why did the function feel lonely? No one called it.
+63. I used to be indecisive. Now I’m not sure.
+64. Why did the cookie go to the doctor? It felt crummy.
+65. I tried to multitask. Now I’m bad at everything.
+66. Why did the developer sleep at work? He was debugging his dreams.
+67. I asked my watch for the time. It said, “About time you asked.”
+68. Why don’t trees use social media? Too many log-ins.
+69. I wrote a book on procrastination. I’ll publish it later.
+70. Why did the programmer quit his job? He didn’t get arrays.
+71. I tried meditation. Fell asleep.
+72. Why did the math teacher break up with the calculator? Too many problems.
+73. I told my fridge a joke. It didn’t laugh—it just hummed.
+74. Why did the computer bring sunscreen? Too much exposure.
+75. I started running… out of excuses.
+76. Why don’t programmers trust stairs? They’re always up to something.
+77. I asked my brain to be quiet. It started a podcast.
+78. Why was the spreadsheet so confident? It had strong values.
+79. I tried to fix my life like a bug. Turns out, it’s a feature.
+80. Why did the developer get locked out? He forgot his keys and his keys.
+81. I told my boss I’d be transparent. Now I’m invisible.
+82. Why did the printer break up with the computer? Too many paper jams.
+83. I tried to learn fast typing. My keyboard disagreed.
+84. Why was the cloud so calm? Nothing could faze it.
+85. I asked my alarm clock for mercy. It snoozed me.
+86. Why did the code go to school? To improve its class.
+87. I tried to save money. My browser opened Amazon.
+88. Why don’t programmers like beach days? Too much sand in the sockets.
+89. I told my email a joke. It went straight to spam.
+90. Why was the computer tired? It ran all night.
+91. I asked my GPS for life advice. It said, “Recalculating.”
+92. Why did the developer hate surprises? Unexpected behavior.
+93. I tried to clean my desk. Found bugs.
+94. Why did the phone go to jail? It lost its cell.
+95. I told my code a joke. It threw an exception.
+96. Why was the monitor jealous? The keyboard got all the attention.
+97. I tried to relax, but my thoughts had pop-ups.
+98. Why did the developer love dark mode? Less exposure.
+99. I asked my code to work. It asked for coffee.
+100. I told a joke about documentation. Nobody read it.
