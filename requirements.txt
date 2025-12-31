@@ -10,3 +10,5 @@ whitenoise==6.11.0
 dj-database-url==3.0.1
 psycopg2==2.9.11
 celery==5.6.1
+requests==2.32.5
+lxml==6.0.2
