@@ -29,6 +29,9 @@ class Currency(models.Model):
     symbol = models.CharField(max_length=5, unique=True, null=True, blank=True)
     order = models.IntegerField(default=0)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         ordering = ['order']
 
@@ -87,6 +90,9 @@ class ExchangeRate(models.Model):
 
     date = models.DateField()
     rate = models.DecimalField(max_digits=10, decimal_places=4)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ['from_currency', 'to_currency', 'date']
@@ -170,3 +176,9 @@ class Sellable(models.Model):
     description = models.TextField(null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
