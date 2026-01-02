@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 import dj_database_url
+from celery.schedules import crontab
 from environs import env
 
 env.read_env()
@@ -194,3 +195,14 @@ REST_FRAMEWORK = {
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+
+REDIS_URL = env.str('REDIS_URL', default='redis://localhost:6379/0')
+
+CELERY_BROKER_URL = REDIS_URL
+CELERY_BEAT_SCHEDULE = {
+    "refresh_exchange_rates_from_tcmb": {
+        "task": "commerce.tasks.refresh_exchange_rates_from_tcmb",
+        "schedule": crontab(minute="*/30"),
+    },
+}

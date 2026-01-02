@@ -1,3 +1,8 @@
+# How to run celery
+```shell
+celery -A sasko worker --beat --loglevel=info
+```
+
 # Sasko.io - AI-Powered iGaming SaaS Platform
 
 🎰 **Çılgın Deneyimlerle iGaming Endüstrisine Devrim Getiren Platform**
