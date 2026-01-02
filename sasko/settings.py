@@ -197,7 +197,7 @@ LOCALE_PATHS = [
 ]
 
 
-REDIS_URL = env.str('REDIS_URL', default='redis://localhost:6379/0')
+REDIS_URL = env.str('REDISCLOUD_URL', default='redis://localhost:6379/0')
 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_BEAT_SCHEDULE = {
