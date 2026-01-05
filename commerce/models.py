@@ -181,4 +181,28 @@ class Sellable(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}({self.price}{self.currency.symbol})'
+
+
+class Order(models.Model):
+    order_number = models.CharField(max_length=40, unique=True)
+
+    merchant = models.ForeignKey('accounts.Merchant', on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.order_number
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    sellable = models.ForeignKey(Sellable, on_delete=models.CASCADE)
+    count = models.PositiveIntegerField(default=1)
+
+    total_price = models.DecimalField(decimal_places=2, max_digits=10)
+    price_currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
