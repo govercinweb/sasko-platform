@@ -189,6 +189,9 @@ class Order(models.Model):
 
     merchant = models.ForeignKey('accounts.Merchant', on_delete=models.CASCADE)
 
+    is_cancelled = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -6,4 +6,5 @@ urlpatterns = [
     path('auth/login/', obtain_expiring_auth_token),
     path('accounts/', include('accounts.urls')),
     path('faqs/', include('faqs.urls')),
+    path('commerce/', include('commerce.urls')),
 ]
