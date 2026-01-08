@@ -3,8 +3,9 @@ from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from commerce.models import Order
-from commerce.serializers import OrderSerializer, OrderCancelSerializer, OrderDeleteSerializer
+from commerce.models import Order, Sellable, Currency
+from commerce.serializers import OrderSerializer, OrderCancelSerializer, OrderDeleteSerializer, SellableSerializer, \
+    CurrencySerializer
 
 
 class OrdersModelViewSet(mixins.CreateModelMixin,
@@ -38,3 +39,27 @@ class OrdersModelViewSet(mixins.CreateModelMixin,
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'success': True, 'data': serializer.data})
+
+
+class SellablesViewSet(
+    # mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    # mixins.UpdateModelMixin,
+    # mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Sellable.objects.all()
+    serializer_class = SellableSerializer
+
+
+class CurrenciesViewSet(
+    # mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    # mixins.UpdateModelMixin,
+    # mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer

@@ -11,9 +11,19 @@ class CurrencySerializer(serializers.ModelSerializer):
 
 
 class SellableSerializer(serializers.ModelSerializer):
+    currency_code = serializers.CharField(source='currency.code')
+    currency_symbol = serializers.CharField(source='currency.symbol')
+
     class Meta:
         model = Sellable
-        fields = ['id', 'name']
+        fields = [
+            'id',
+            'name',
+            'price',
+            'currency',
+            'currency_code',
+            'currency_symbol',
+        ]
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
