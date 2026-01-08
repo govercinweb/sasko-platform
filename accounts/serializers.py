@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification
+from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification, Merchant
 
 
 class ProfileDetailUpdateSerializer(serializers.ModelSerializer):
@@ -121,3 +121,12 @@ class InSiteNotificationChangeReadStatusSerializer(serializers.Serializer):
                 defaults=defaults,
             )
         return validated_data
+
+
+class MerchantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Merchant
+        fields = [
+            'id',
+            'name',
+        ]

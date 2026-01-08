@@ -1,15 +1,15 @@
 import datetime
 
 from django.utils import timezone
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from django.db.models import Q, Prefetch, OuterRef
 
-from accounts.models import InSiteNotification, InSiteNotificationUserInteraction
+from accounts.models import InSiteNotification, InSiteNotificationUserInteraction, Merchant
 from accounts.serializers import ProfileDetailUpdateSerializer, ChangePasswordSerializer, \
-    InSiteNotificationSerializer, InSiteNotificationChangeReadStatusSerializer
+    InSiteNotificationSerializer, InSiteNotificationChangeReadStatusSerializer, MerchantSerializer
 from api.serializers import ProfileMeSerializer
 
 
@@ -95,3 +95,15 @@ class InSiteNotificationViewSet(viewsets.ReadOnlyModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(self.format_output(InSiteNotificationSerializer(instance=self.get_queryset(), many=True).data))
+
+
+class MerchantsViewSet(
+    # mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    # mixins.UpdateModelMixin,
+    # mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Merchant.objects.all()
+    serializer_class = MerchantSerializer

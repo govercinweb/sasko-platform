@@ -198,6 +198,12 @@ class Order(models.Model):
     def __str__(self):
         return self.order_number
 
+    def total_in_default_currency(self):
+        total = Decimal('0')
+        for item in self.orderitem_set.all():
+            total += item.total_price_in_default_currency()
+        return total
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -209,3 +215,9 @@ class OrderItem(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def total_price_in_default_currency(self):
+        return self.price_currency.convert(
+            self.total_price,
+            Currency.DEFAULT_CURRENCY_CODE,
+        )
