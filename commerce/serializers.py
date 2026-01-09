@@ -27,16 +27,22 @@ class SellableSerializer(serializers.ModelSerializer):
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    sellable = SellableSerializer()
-    price_currency = CurrencySerializer()
+    # sellable = SellableSerializer()
+    # price_currency = CurrencySerializer()
 
     class Meta:
         model = OrderItem
         fields = ['id', 'count', 'total_price', 'sellable', 'price_currency']
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['sellable'] = SellableSerializer(instance.sellable).data
+        data['price_currency'] = CurrencySerializer(instance.price_currency).data
+        return data
+
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True, source='orderitem_set', read_only=True)
+    order_items = OrderItemSerializer(many=True, source='orderitem_set')
     merchant_name = serializers.CharField(source='merchant.name', read_only=True)
     total_amount = serializers.DecimalField(
         source='total_in_default_currency',
@@ -56,9 +62,11 @@ class OrderSerializer(serializers.ModelSerializer):
             'created_at',
             'total_amount',
             'total_amount_currency_symbol',
+            'merchant',
         ]
         extra_kwargs = {
             'order_number': {'read_only': True},
+            'merchant': {'write_only': True},
         }
 
     def validate(self, attrs):
@@ -68,6 +76,14 @@ class OrderSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_total_amount_currency_symbol(obj):
         return Currency.DEFAULT_CURRENCY_SYMBOL
+
+    def create(self, validated_data):
+        order_items = validated_data.pop('orderitem_set')
+        order = Order.objects.create(**validated_data)
+        for item in order_items:
+            item['order'] = order
+            OrderItem.objects.create(**item)
+        return order
 
 
 class OrderCancelSerializer(serializers.ModelSerializer):

@@ -18,11 +18,12 @@ class ProfileDetailUpdateSerializer(serializers.ModelSerializer):
             'last_name': {'required': True},
         }
 
-    # def validate(self, data):
-    #     raise serializers.ValidationError('this is error!')
-    #     # import time
-    #     # time.sleep(10)
-    #     # return data
+    def validate(self, data):
+        if len(data['first_name']) <= 2:
+            raise serializers.ValidationError({'first_name': _('First name can not be less then 3 characters.')})
+        if len(data['last_name']) <= 2:
+            raise serializers.ValidationError({'first_name': _('Last name can not be less then 3 characters.')})
+        return data
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
