@@ -19,10 +19,10 @@ class OrdersModelViewSet(mixins.CreateModelMixin,
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ('is_cancelled',)
 
-    def dispatch(self, request, *args, **kwargs):
-        import time
-        time.sleep(1)
-        return super().dispatch(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     import time
+    #     time.sleep(1)
+    #     return super().dispatch(request, *args, **kwargs)
 
     @action(detail=True, methods=['patch'], serializer_class=OrderCancelSerializer)
     def cancel_order(self, request, pk):
