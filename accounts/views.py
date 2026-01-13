@@ -8,9 +8,10 @@ from rest_framework.response import Response
 
 from django.db.models import Q, Prefetch, OuterRef
 
-from accounts.models import InSiteNotification, InSiteNotificationUserInteraction, Merchant
+from accounts.models import InSiteNotification, InSiteNotificationUserInteraction, Merchant, InfrastructureCredential
 from accounts.serializers import ProfileDetailUpdateSerializer, ChangePasswordSerializer, \
-    InSiteNotificationSerializer, InSiteNotificationChangeReadStatusSerializer, MerchantSerializer
+    InSiteNotificationSerializer, InSiteNotificationChangeReadStatusSerializer, MerchantSerializer, \
+    InfrastructureCredentialSerializer
 from api.serializers import ProfileMeSerializer
 
 
@@ -115,3 +116,17 @@ class MerchantsViewSet(
 class InfrastructureView(views.APIView):
     def get(self, request):
         return Response(Merchant.INFRASTRUCTURES)
+
+
+class InfrastructureCredentialViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    # mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = InfrastructureCredential.objects.all()
+    serializer_class = InfrastructureCredentialSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ('is_active', 'merchant')

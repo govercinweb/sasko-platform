@@ -2,7 +2,8 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 
-from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification, Merchant
+from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification, Merchant, \
+    InfrastructureCredential
 from commerce.serializers import CurrencySerializer
 
 
@@ -144,3 +145,22 @@ class MerchantSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['currency'] = CurrencySerializer(instance.currency).data
         return data
+
+
+class InfrastructureCredentialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InfrastructureCredential
+        fields = [
+            'id',
+            'email',
+            'password',
+            'otp_secret',
+            'is_active',
+            'created_at',
+            'merchant',
+        ]
+
+        extra_kwargs = {
+            'created_at': {'read_only': True},
+            # 'merchant': {'write_only': True},
+        }

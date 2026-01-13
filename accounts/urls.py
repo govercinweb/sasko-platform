@@ -7,6 +7,11 @@ router = routers.DefaultRouter()
 router.register('me', views.ProfileMe, 'me')
 router.register('in_site_notifications', views.InSiteNotificationViewSet, 'in_site_notifications')
 router.register('merchants', views.MerchantsViewSet, 'merchants')
+router.register(
+    'infrastructure_credentials',
+    views.InfrastructureCredentialViewSet,
+    'infrastructure_credentials',
+)
 
 urlpatterns = [
     path('', include(router.urls)),
