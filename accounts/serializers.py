@@ -126,7 +126,7 @@ class InSiteNotificationChangeReadStatusSerializer(serializers.Serializer):
 
 
 class MerchantSerializer(serializers.ModelSerializer):
-    currency = CurrencySerializer()
+    # currency = CurrencySerializer()
 
     class Meta:
         model = Merchant
@@ -139,3 +139,8 @@ class MerchantSerializer(serializers.ModelSerializer):
             'is_transaction_fetching_active',
             'is_active',
         ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['currency'] = CurrencySerializer(instance.currency).data
+        return data

@@ -2,7 +2,7 @@ import datetime
 
 import django_filters
 from django.utils import timezone
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -110,3 +110,8 @@ class MerchantsViewSet(
     serializer_class = MerchantSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ('is_active',)
+
+
+class InfrastructureView(views.APIView):
+    def get(self, request):
+        return Response(Merchant.INFRASTRUCTURES)

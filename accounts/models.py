@@ -41,13 +41,14 @@ auditlog.register(
 
 
 class Merchant(models.Model):
+    BETCO = 'betco'
+
+    INFRASTRUCTURES = [
+        (BETCO, 'Betconstruct'),
+    ]
+
     name = models.CharField(max_length=150)
-    infrastructure = models.CharField(
-        max_length=60,
-        choices=[
-            ('betco', 'Betconstruct'),
-        ]
-    )
+    infrastructure = models.CharField(max_length=60, choices=INFRASTRUCTURES)
     currency = models.ForeignKey('commerce.Currency', on_delete=models.CASCADE)
     main_domain = models.CharField(max_length=300)
     is_transaction_fetching_active = models.BooleanField(default=False)
@@ -56,6 +57,9 @@ class Merchant(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.name

@@ -10,4 +10,5 @@ router.register('merchants', views.MerchantsViewSet, 'merchants')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('infrastructures/', views.InfrastructureView.as_view()),
 ]
