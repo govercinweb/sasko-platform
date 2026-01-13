@@ -2,8 +2,21 @@ import datetime
 
 from django.conf import settings
 from django.utils import timezone
-from rest_framework.authentication import TokenAuthentication, get_authorization_header
+from rest_framework.authentication import TokenAuthentication, BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
+
+
+class PreAuthFromMiddlewareAuthentication(BaseAuthentication):
+    """
+    If DRFUserMiddleware already authenticated this request,
+    reuse it and skip running JWT/Token auth again.
+    """
+    def authenticate(self, request):
+        user = getattr(request._request, "_preauth_user", None)
+        auth = getattr(request._request, "_preauth_auth", None)
+        if user is not None:
+            return user, auth
+        return None
 
 
 class ExpiringTokenAuthentication(TokenAuthentication):

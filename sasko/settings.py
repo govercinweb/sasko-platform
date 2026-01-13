@@ -70,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'sasko.middlewares.drf_user.DRFUserMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'auditlog.middleware.AuditlogMiddleware',
@@ -173,17 +174,18 @@ STATIC_ROOT = BASE_DIR / 'collected_statics'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUDITLOG_INCLUDE_ALL_MODELS = True
-# AUDITLOG_EXCLUDE_TRACKING_FIELDS = [
-#     'created_at',
-#     'updated_at',
-#     'last_login',
-# ]
+AUDITLOG_INCLUDE_ALL_MODELS = True
+AUDITLOG_EXCLUDE_TRACKING_FIELDS = [
+    'created_at',
+    'updated_at',
+    # 'last_login',
+]
 
 DRF_AUTH_TOKEN_LIFE_IN_HOURS = 24
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'api.authentication.PreAuthFromMiddlewareAuthentication',
         'api.authentication.ExpiringTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
@@ -208,5 +210,8 @@ CELERY_BEAT_SCHEDULE = {
     "refresh_exchange_rates_from_tcmb": {
         "task": "commerce.tasks.refresh_exchange_rates_from_tcmb",
         "schedule": crontab(minute="*/30"),
+        # "schedule": 10,
     },
 }
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 1

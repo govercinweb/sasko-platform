@@ -1,5 +1,6 @@
 import datetime
 
+import django_filters
 from django.utils import timezone
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
@@ -98,12 +99,14 @@ class InSiteNotificationViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MerchantsViewSet(
-    # mixins.CreateModelMixin,
+    mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
-    # mixins.UpdateModelMixin,
+    mixins.UpdateModelMixin,
     # mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     viewsets.GenericViewSet
 ):
     queryset = Merchant.objects.all()
     serializer_class = MerchantSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ('is_active',)

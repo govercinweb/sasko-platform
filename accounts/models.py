@@ -48,14 +48,7 @@ class Merchant(models.Model):
             ('betco', 'Betconstruct'),
         ]
     )
-    currency = models.CharField(
-        max_length=10,
-        choices=[
-            ('TRY', 'TRY'),
-            ('USD', 'USD'),
-            ('EUR', 'EUR'),
-        ]
-    )
+    currency = models.ForeignKey('commerce.Currency', on_delete=models.CASCADE)
     main_domain = models.CharField(max_length=300)
     is_transaction_fetching_active = models.BooleanField(default=False)
 

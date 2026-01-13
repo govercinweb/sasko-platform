@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjUserAdmin
+from django.contrib.sessions.models import Session
 from django.utils.translation import gettext_lazy as _
 
 from accounts.models import User, Merchant, InfrastructureCredential, Role, InSiteNotification, \
@@ -52,7 +53,7 @@ class InfrastructureCredentialInline(admin.TabularInline):
 
 @admin.register(Merchant)
 class MerchantAdmin(admin.ModelAdmin):
-    list_display = ['name', 'infrastructure', 'currency', 'main_domain']
+    list_display = ['name', 'infrastructure', 'currency', 'main_domain', 'is_active']
     search_fields = ['name', 'main_domain']
     list_filter = ['currency']
     inlines = [InfrastructureCredentialInline]
@@ -76,3 +77,10 @@ class InSiteNotificationAdmin(admin.ModelAdmin):
 @admin.register(InSiteNotificationUserInteraction)
 class InSiteNotificationUserInteractionAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Session)
+class SessionAdmin(admin.ModelAdmin):
+    def _session_data(self, obj):
+        return obj.get_decoded()
+    list_display = ['session_key', '_session_data', 'expire_date']

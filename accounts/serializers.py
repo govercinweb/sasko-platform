@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 from accounts.models import User, InSiteNotificationUserInteraction, InSiteNotification, Merchant
+from commerce.serializers import CurrencySerializer
 
 
 class ProfileDetailUpdateSerializer(serializers.ModelSerializer):
@@ -125,9 +126,16 @@ class InSiteNotificationChangeReadStatusSerializer(serializers.Serializer):
 
 
 class MerchantSerializer(serializers.ModelSerializer):
+    currency = CurrencySerializer()
+
     class Meta:
         model = Merchant
         fields = [
             'id',
             'name',
+            'infrastructure',
+            'currency',
+            'main_domain',
+            'is_transaction_fetching_active',
+            'is_active',
         ]
