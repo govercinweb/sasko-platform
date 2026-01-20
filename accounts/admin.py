@@ -84,3 +84,11 @@ class SessionAdmin(admin.ModelAdmin):
     def _session_data(self, obj):
         return obj.get_decoded()
     list_display = ['session_key', '_session_data', 'expire_date']
+
+
+@admin.register(InfrastructureCredential)
+class InfrastructureCredentialAdmin(admin.ModelAdmin):
+    list_display = ['email', 'merchant__name', 'created_at']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('merchant')

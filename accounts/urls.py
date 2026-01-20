@@ -16,4 +16,5 @@ router.register(
 urlpatterns = [
     path('', include(router.urls)),
     path('infrastructures/', views.InfrastructureView.as_view()),
+    path('main_merchant/', views.MainMerchantForSuperUser.as_view()),
 ]

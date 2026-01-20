@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'api',
     'faqs',
     'commerce',
+    'bonus',
 ]
 
 AUTH_USER_MODEL = "accounts.User"

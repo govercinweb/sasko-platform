@@ -1,12 +1,14 @@
 import datetime
 
 import django_filters
+
+from django.db.models import Q, Prefetch, OuterRef
+from django.core import serializers
 from django.utils import timezone
+
 from rest_framework import viewsets, mixins, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
-from django.db.models import Q, Prefetch, OuterRef
 
 from accounts.models import InSiteNotification, InSiteNotificationUserInteraction, Merchant, InfrastructureCredential
 from accounts.serializers import ProfileDetailUpdateSerializer, ChangePasswordSerializer, \
@@ -130,3 +132,33 @@ class InfrastructureCredentialViewSet(
     serializer_class = InfrastructureCredentialSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ('is_active', 'merchant')
+
+
+class MainMerchantForSuperUser(views.APIView):
+    def post(self, request):
+        if not request.user.is_superuser or not request.user.is_staff:
+            return Response({'detail': 'Unauthorized request.'}, status=403)
+        merchant_id = request.data.get('merchant_id')
+        if not merchant_id:
+            return Response({'detail': 'merchant_id is required'}, status=400)
+
+        try:
+            merchant = Merchant.objects.get(id=merchant_id)
+        except Merchant.DoesNotExist:
+            return Response({'detail': 'Merchant not found'}, status=404)
+
+        request.user.merchant = merchant
+        request.user.save()
+
+        return Response({'detail': 'Main merchant updated successfully'})
+    
+    def get(self, request):
+        if not request.user.is_superuser or not request.user.is_staff:
+            return Response({'detail': 'Unauthorized request.'}, status=403)
+
+        merchant = request.user.merchant
+        if not merchant:
+            return Response({})
+        
+        serializer = MerchantSerializer(merchant)
+        return Response(serializer.data)
